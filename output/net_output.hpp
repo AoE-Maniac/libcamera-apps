@@ -22,6 +22,7 @@ protected:
 
 private:
 	int fd_;
+	int listen_fd_;
 	sockaddr_in saddr_;
 	const sockaddr *saddr_ptr_;
 	socklen_t sockaddr_in_size_;
