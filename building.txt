@@ -1,3 +1,9 @@
+sudo apt install libcamera-dev libjpeg-dev libtiff5-dev cmake libboost-program-options-dev libdrm-dev libexif-dev
+cd
+git clone https://github.com/AoE-Maniac/libcamera-apps.git
+cd libcamera-apps
+git switch rpc
+mkdir build
 cd build
 cmake .. -DENABLE_DRM=0 -DENABLE_X11=0 -DENABLE_QT=0 -DENABLE_OPENCV=0 -DENABLE_TFLITE=0
 make -j4
