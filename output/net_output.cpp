@@ -7,6 +7,7 @@
 
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include <netinet/tcp.h>
 #include <fcntl.h>
 
 #include "net_output.hpp"
@@ -114,6 +115,10 @@ void NetOutput::outputBuffer(void *mem, size_t size, int64_t /*timestamp_us*/, u
 		{
 			LOG(2, "Client connection accepted");
 			fd_ = fd;
+      
+			int enable = 1;
+			if (setsockopt(fd_, IPPROTO_TCP, TCP_NODELAY, &enable, sizeof(enable)) < 0)
+				throw std::runtime_error("failed to setsockopt client socket");
 		}
 	}
 
