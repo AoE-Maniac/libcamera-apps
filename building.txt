@@ -1,4 +1,5 @@
 sudo apt install libcamera-dev libjpeg-dev libtiff5-dev cmake libboost-program-options-dev libdrm-dev libexif-dev
+sudo apt-get install libavcodec-dev libavdevice-dev libavformat-dev libswscale-dev libavutil-dev
 cd
 git clone https://github.com/AoE-Maniac/libcamera-apps.git
 cd libcamera-apps
