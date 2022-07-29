@@ -129,12 +129,19 @@ void LibAvEncoder::initVideoCodec(VideoOptions const *options, StreamInfo const 
 
 void LibAvEncoder::initAudioInCodec(VideoOptions const *options, StreamInfo const &info)
 {
-	AVInputFormat *input_fmt = av_find_input_format("pulse");
+	AVInputFormat *input_fmt = av_find_input_format("alsa");
 
 	assert(in_fmt_ctx_ == nullptr);
-	int ret = avformat_open_input(&in_fmt_ctx_, options->audio_device.c_str(), input_fmt, nullptr);
+
+	in_fmt_ctx_ = avformat_alloc_context();
+	in_fmt_ctx_->audio_codec_id = AV_CODEC_ID_PCM_S32LE;
+  
+	AVDictionary* input_opt = 0;
+	av_dict_set(&input_opt, "sample_rate", "8000", 0);
+
+	int ret = avformat_open_input(&in_fmt_ctx_, options->audio_device.c_str(), input_fmt, &input_opt);
 	if (ret < 0)
-		throw std::runtime_error("libav: cannot open pulseaudio input device " + options->audio_device);
+		throw std::runtime_error("libav: cannot open audio input device " + options->audio_device);
 
 	avformat_find_stream_info(in_fmt_ctx_, nullptr);
 
